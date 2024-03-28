@@ -7,7 +7,7 @@
 #include <string.h>
 
 
-
+//setup
 void 
 setup(int64_t N, uint64_t A[])
 {
