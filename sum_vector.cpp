@@ -26,7 +26,7 @@ sum(int64_t N, uint64_t A[])
 
    uint64_t sum;
    for(int i = 0; i < N; ++i){
-   sum += A[i]
+   sum += A[i];
    }
 
    return sum;

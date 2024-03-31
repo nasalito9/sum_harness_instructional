@@ -29,7 +29,7 @@ sum(int64_t N, uint64_t A[])
    int64_t sum = 0;
 
     for (int64_t i = 0; i < N; ++i) {
-        result += A[i];
+        sum += A[i];
     }
 
 
