@@ -4,7 +4,7 @@ E. Wes Bethel, Copyright (C) 2022
 
 October 2022
 
-Description: This code loads a .csv file and creates a 3-variable plot, and saves it to a file named "myplot.png"
+Description: This code loads a .csv file and creates a 3-variable plot, and saves it to a file named "MFLOPS.png"
 
 Inputs: the named file "sample_data_3vars.csv"
 
@@ -18,10 +18,12 @@ Assumptions: developed and tested using Python version 3.8.8 on macOS 11.6
 
 import pandas as pd
 import matplotlib.pyplot as plt
+import numpy as np
 
-plot_fname = "myplot.png"
 
-fname = "sample_data_3vars.csv"
+plot_fname = "memoryBandwidth.png"
+
+fname = "3vars_dataset.csv"
 df = pd.read_csv(fname, comment="#")
 print(df)
 
@@ -33,29 +35,34 @@ print("var names =", var_names)
 # assumption: column order - 0=problem size, 1=blas time, 2=basic time
 
 problem_sizes = df[var_names[0]].values.tolist()
-code1_time = df[var_names[1]].values.tolist()
-code2_time = df[var_names[2]].values.tolist()
-code3_time = df[var_names[3]].values.tolist()
+total_time = df[var_names[1]].values.tolist()
+mflops_time = df[var_names[2]].values.tolist()
+memBandWidth = df[var_names[3]].values.tolist()
+memoryLatency = df[var_names[4]].values.tolist()
 
-plt.figure()
+code1, code2, code3 = [], [], []
+
+for i in range(0, 5):
+    code1.append(memBandWidth[i])
+    code2.append(memBandWidth[i + 5])
+    code3.append(memBandWidth[i + 10])
+
+print(code1)
+print(code2)
+print(code3)
 
 plt.title("Comparison of 3 Codes")
+barWidth = 1
 
-xlocs = [i for i in range(len(problem_sizes))]
+X_axis = np.arange(len(code1))
 
-plt.xticks(xlocs, problem_sizes)
+plt.bar(X_axis + 0, code1, color='b', width=barWidth, edgecolor='grey', label='Direct')
+plt.bar(X_axis + 10, code2, color='r', width=barWidth, edgecolor='grey', label='Indirect')
+plt.bar(X_axis + 20, code3, color='g', width=barWidth, edgecolor='grey', label='Vector')
 
-plt.plot(code1_time, "r-o")
-plt.plot(code2_time, "b-x")
-plt.plot(code3_time, "g-^")
+plt.ylabel("%memoryBandwidth")
 
-#plt.xscale("log")
-#plt.yscale("log")
-
-plt.xlabel("Problem Sizes")
-plt.ylabel("runtime")
-
-varNames = [var_names[1], var_names[2], var_names[3]]
+varNames = ["Direct", "Indirect", "Vector"]
 plt.legend(varNames, loc="best")
 
 plt.grid(axis='both')
