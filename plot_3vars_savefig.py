@@ -21,7 +21,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-plot_fname = "memoryBandwidth.png"
+plot_fname = "AvgMemoryLatency.png"
 
 fname = "3vars_dataset.csv"
 df = pd.read_csv(fname, comment="#")
@@ -43,9 +43,9 @@ memoryLatency = df[var_names[4]].values.tolist()
 code1, code2, code3 = [], [], []
 
 for i in range(0, 5):
-    code1.append(memBandWidth[i])
-    code2.append(memBandWidth[i + 5])
-    code3.append(memBandWidth[i + 10])
+    code1.append(memoryLatency[i])
+    code2.append(memoryLatency[i + 5])
+    code3.append(memoryLatency[i + 10])
 
 print(code1)
 print(code2)
@@ -60,7 +60,7 @@ plt.bar(X_axis + 0, code1, color='b', width=barWidth, edgecolor='grey', label='D
 plt.bar(X_axis + 10, code2, color='r', width=barWidth, edgecolor='grey', label='Indirect')
 plt.bar(X_axis + 20, code3, color='g', width=barWidth, edgecolor='grey', label='Vector')
 
-plt.ylabel("%memoryBandwidth")
+plt.ylabel("AvgMemoryLatency")
 
 varNames = ["Direct", "Indirect", "Vector"]
 plt.legend(varNames, loc="best")
