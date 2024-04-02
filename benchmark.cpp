@@ -35,7 +35,7 @@ int main(int argc, char** argv)
    std::chrono::time_point<std::chrono::high_resolution_clock> start_time;
 
    /* For each test size */
-   for (int64_t n : problem_sizes) 
+   for (int64_t n : problem_sizes)
    {
       printf("Working on problem size N=%lld \n", n);
 
